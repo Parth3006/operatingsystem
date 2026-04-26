@@ -1,0 +1,186 @@
+Linux Codes with output:-
+
+-----------Q1. Apply awk command on suitable data. Describe respective commands -------------
+
+touch marks.txt
+cat> marks.txt
+cat marks.txt
+1. Print Full File
+awk '{print}' marks.txt
+2. Print Roll No + Name
+awk '{print $1,$2}' marks.txt
+3. Print Only Names
+awk '{print $2}' marks.txt
+4. Print Only Marks
+awk '{print $3}' marks.txt
+5. Marks > 80
+awk '$3>80 {print $2,$3}' marks.txt
+6. Count Marks > 80
+awk '$3>80 {count++} END {print count}' marks.txt
+7. Sum of Marks
+awk '{sum+=$3} END {print sum}' marks.txt
+
+-----------Q2. Demonstrate and describe grep commands, use suitable data.-------------- 
+
+1. Search Ved
+grep Ved marks.txt
+2. Ignore Case
+grep -i ved marks.txt
+3. Show Line Number
+grep -n Ved marks.txt
+4. Line Number + Ignore Case
+grep -n -i ved marks.txt
+5. Count Ved
+grep -c Ved marks.txt
+
+6. Count Roll numbers containing 10
+grep -c 10 marks.txt
+
+------------Q3.Demonstrate and describe chmod, adduser, pwd commands.------------------ 
+pwd (Present Working Directory):
+It is used to display the current working directory path where the user is presently working.
+
+chmod (Change Mode):
+It is used to change the permissions of a file or directory such as read, write and execute.
+
+adduser:
+It is used to create a new user account in the Linux system.
+
+
+ved@ved:~$ pwd
+/home/ved
+
+ved@ved:~$ touch demo.txt
+ved@ved:~$ chmod 700 demo.txt
+ved@ved:~$ ls -l demo.txt
+-rwx------ 1 ved ved 0 Apr 22 18:13 demo.txt
+
+ved@ved:~$ su testuser
+Password:
+
+testuser@ved:/home/ved$ echo hello >> /home/ved/demo.txt
+bash: /home/ved/demo.txt: Permission denied
+
+testuser@ved:/home/ved$
+
+
+----------------------Q4. Demonstrate and describe chmod and chown command. ---------
+
+chmod (Change Mode):
+It is used to change the permissions of a file or directory such as read, write and execute.
+
+chown (Change Owner):
+It is used to change the owner of a file or directory from one user to another user
+
+ved@Ved:~$ touch demo.txt
+ved@Ved:~$ cat
+cat: -: input file is output file
+ved@Ved:~$ cat demo.txt
+ved@Ved:~$ touch demo.txt
+ved@Ved:~$ ls -l demo.txt
+-rwx------ 1 ved ved 0 Apr 22 19:31 demo.txt
+ved@Ved:~$ chmod 777 demo.txt
+ved@Ved:~$ ls -l demo.txt
+-rwxrwxrwx 1 ved ved 0 Apr 22 19:31 demo.txt
+ved@Ved:~$ sudo chown testuser demo.txt
+ved@Ved:~$ ls -l demo.txt
+-rwxrwxrwx 1 testuser ved 0 Apr 22 19:31 demo.txt
+ved@Ved:~$
+
+
+--------------Q5.Demonstrate cp command through system call. Describe respective commands.------- 
+‘
+Code:-
+import os, sys
+
+s=sys.argv[1]
+d=sys.argv[2]
+
+f1=os.open(s,os.O_RDONLY)
+f2=os.open(d,os.O_CREAT|os.O_WRONLY|os.O_TRUNC,0o644)
+
+while True:
+    data=os.read(f1,1024)
+    if not data:
+        break
+    os.write(f2,data)
+
+os.close(f1)
+os.close(f2)
+
+print("File copied successfully")
+
+Theory:-
+import os, sys
+• Imports required modules
+
+s = sys.argv[1]
+d = sys.argv[2]
+• Reads source and destination filenames
+
+os.open()
+• Opens source and destination files
+
+os.read(f1, 1024)
+• Reads data from source file in blocks of 1024 bytes
+
+os.write(f2, data)
+• Writes data into destination file
+
+os.close()
+• Closes both files after copying
+
+print("File copied successfully")
+• Displays success message
+
+
+-----------------Q6.Demonstrate and describe process related commands. -------------------
+Theory :-
+#!/bin/bash
+• Executes script using bash shell
+
+ps
+• Shows current running processes
+
+ps -ef
+• Displays all processes with details
+
+sleep 60 &
+• Runs process in background
+
+jobs
+• Shows background jobs
+
+kill %1
+• Kills background job
+
+CODE:
+
+#!/bin/bash
+
+echo "Process Commands"
+
+echo "1. Current Processes"
+ps
+
+echo "2. All Processes"
+ps -ef
+
+echo "3. Top CPU Processes"
+ps -e -o pid,pcpu,comm --sort=-%cpu | head
+
+echo "4. Background Process"
+sleep 60 &
+jobs
+
+echo "5. Kill Background Process"
+kill %1
+jobs
+
+Execution:-
+//commands here -> execute them one by one 
+ vi process.sh
+press 'i' to insert
+write the code given below
+:wq (write and quit)
+to run -> bash process.sh
